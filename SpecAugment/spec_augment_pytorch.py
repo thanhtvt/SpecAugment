@@ -38,8 +38,6 @@ import librosa
 import librosa.display
 import numpy as np
 import random
-import matplotlib
-matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from SpecAugment.sparse_image_warp_pytorch import sparse_image_warp
 import torch
@@ -116,8 +114,11 @@ def visualization_spectrogram(mel_spectrogram, title):
     """
     # Show mel-spectrogram using librosa's specshow.
     plt.figure(figsize=(10, 4))
-    librosa.display.specshow(librosa.power_to_db(mel_spectrogram[0, :, :], ref=np.max), y_axis='mel', fmax=8000, x_axis='time')
-    # plt.colorbar(format='%+2.0f dB')
+    librosa.display.specshow(librosa.power_to_db(mel_spectrogram[0, :, :], ref=np.max),
+                             y_axis='mel',
+                             fmax=8000,
+                             x_axis='time')
+    plt.colorbar(format='%+2.0f dB')
     plt.title(title)
     plt.tight_layout()
     plt.show()

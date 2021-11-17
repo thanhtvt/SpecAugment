@@ -16,22 +16,18 @@
 
 import argparse
 import librosa
-from SpecAugment import spec_augment_tensorflow
-import os, sys
+import os
+import sys
 import numpy as np
-# sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+from SpecAugment import spec_augment_tensorflow
 
 parser = argparse.ArgumentParser(description='Spec Augment')
-parser.add_argument('--audio-path', default='../data/61-70968-0002.wav',
-                    help='The audio file.')
-parser.add_argument('--time-warp-para', default=80,
-                    help='time warp parameter W')
-parser.add_argument('--frequency-mask-para', default=100,
-                    help='frequency mask parameter F')
-parser.add_argument('--time-mask-para', default=27,
-                    help='time mask parameter T')
-parser.add_argument('--masking-line-number', default=1,
-                    help='masking line number')
+parser.add_argument('--audio-path', default='../data/61-70968-0002.wav', help='The audio file.')
+parser.add_argument('--time-warp-para', default=80, help='time warp parameter W')
+parser.add_argument('--frequency-mask-para', default=100, help='frequency mask parameter F')
+parser.add_argument('--time-mask-para', default=27, help='time mask parameter T')
+parser.add_argument('--masking-line-number', default=1, help='masking line number')
 
 args = parser.parse_args()
 audio_path = args.audio_path
@@ -59,5 +55,6 @@ if __name__ == "__main__":
                                                       title="Raw Mel Spectrogram")
 
     # Show time warped & masked spectrogram
-    spec_augment_tensorflow.visualization_tensor_spectrogram(mel_spectrogram=spec_augment_tensorflow.spec_augment(mel_spectrogram),
-                                                      title="tensorflow Warped & Masked Mel Spectrogram")
+    spec_augment_tensorflow.visualization_tensor_spectrogram(
+        mel_spectrogram=spec_augment_tensorflow.spec_augment(mel_spectrogram),
+        title="tensorflow Warped & Masked Mel Spectrogram")

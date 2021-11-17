@@ -65,7 +65,7 @@ def sparse_warp(mel_spectrogram, time_warping_para=80):
     # Step 1 : Time warping
     # Image warping control point setting.
     # Source
-    pt = tf.random.uniform([], time_warping_para, n-time_warping_para, tf.int32) # radnom point along the time axis
+    pt = tf.random.uniform([], time_warping_para, n - time_warping_para, tf.int32)  # random point along the time axis
     src_ctr_pt_freq = tf.range(v // 2)  # control points on freq-axis
     src_ctr_pt_time = tf.ones_like(src_ctr_pt_freq) * pt  # control points on time-axis
     src_ctr_pts = tf.stack((src_ctr_pt_time, src_ctr_pt_freq), -1)
@@ -112,7 +112,7 @@ def frequency_masking(mel_spectrogram, v, frequency_masking_para=27, frequency_m
     for i in range(frequency_mask_num):
         f = tf.random.uniform([], minval=0, maxval=frequency_masking_para, dtype=tf.int32)
         v = tf.cast(v, dtype=tf.int32)
-        f0 = tf.random.uniform([], minval=0, maxval=v-f, dtype=tf.int32)
+        f0 = tf.random.uniform([], minval=0, maxval=v - f, dtype=tf.int32)
 
         # warped_mel_spectrogram[f0:f0 + f, :] = 0
         mask = tf.concat((tf.ones(shape=(1, n, v - f0 - f, 1)),
@@ -146,10 +146,10 @@ def time_masking(mel_spectrogram, tau, time_masking_para=100, time_mask_num=2):
     # Step 3 : Time masking
     for i in range(time_mask_num):
         t = tf.random.uniform([], minval=0, maxval=time_masking_para, dtype=tf.int32)
-        t0 = tf.random.uniform([], minval=0, maxval=tau-t, dtype=tf.int32)
+        t0 = tf.random.uniform([], minval=0, maxval=tau - t, dtype=tf.int32)
 
         # mel_spectrogram[:, t0:t0 + t] = 0
-        mask = tf.concat((tf.ones(shape=(1, n-t0-t, v, 1)),
+        mask = tf.concat((tf.ones(shape=(1, n - t0 - t, v, 1)),
                           tf.zeros(shape=(1, t, v, 1)),
                           tf.ones(shape=(1, t0, v, 1)),
                           ), 1)
@@ -158,7 +158,6 @@ def time_masking(mel_spectrogram, tau, time_masking_para=100, time_mask_num=2):
 
 
 def spec_augment(mel_spectrogram):
-
     v = mel_spectrogram.shape[0]
     tau = mel_spectrogram.shape[1]
 
@@ -180,7 +179,8 @@ def visualization_spectrogram(mel_spectrogram, title):
     """
     # Show mel-spectrogram using librosa's specshow.
     plt.figure(figsize=(10, 4))
-    librosa.display.specshow(librosa.power_to_db(mel_spectrogram[0, :, :, 0], ref=np.max), y_axis='mel', fmax=8000, x_axis='time')
+    librosa.display.specshow(librosa.power_to_db(mel_spectrogram[0, :, :, 0], ref=np.max), y_axis='mel', fmax=8000,
+                             x_axis='time')
     plt.title(title)
     plt.tight_layout()
     plt.show()
@@ -196,7 +196,8 @@ def visualization_tensor_spectrogram(mel_spectrogram, title):
 
     # Show mel-spectrogram using librosa's specshow.
     plt.figure(figsize=(10, 4))
-    librosa.display.specshow(librosa.power_to_db(mel_spectrogram[0, :, :, 0], ref=np.max), y_axis='mel', fmax=8000, x_axis='time')
+    librosa.display.specshow(librosa.power_to_db(mel_spectrogram[0, :, :, 0], ref=np.max), y_axis='mel', fmax=8000,
+                             x_axis='time')
     # plt.colorbar(format='%+2.0f dB')
     plt.title(title)
     plt.tight_layout()

@@ -55,10 +55,11 @@ def freq_mask(spec, F=15, num_masks=1, replace_with_zero=False):
         f_zero = random.randrange(0, num_mel_channels - f)
 
         # avoids randrange error if values are equal and range is empty
-        if (f_zero == f_zero + f): return cloned
+        if f_zero == f_zero + f:
+            return cloned
 
         mask_end = random.randrange(f_zero, f_zero + f)
-        if (replace_with_zero):
+        if replace_with_zero:
             cloned[0][f_zero:mask_end] = 0
         else:
             cloned[0][f_zero:mask_end] = cloned.mean()
@@ -75,10 +76,11 @@ def time_mask(spec, T=15, num_masks=1, replace_with_zero=False):
         t_zero = random.randrange(0, len_spectro - t)
 
         # avoids randrange error if values are equal and range is empty
-        if (t_zero == t_zero + t): return cloned
+        if t_zero == t_zero + t:
+            return cloned
 
         mask_end = random.randrange(t_zero, t_zero + t)
-        if (replace_with_zero):
+        if replace_with_zero:
             cloned[0][:, t_zero:mask_end] = 0
         else:
             cloned[0][:, t_zero:mask_end] = cloned.mean()
